@@ -1,6 +1,6 @@
 package idv.rozen.software;
 
-import idv.rozen.software.spider.*;
+import idv.rozen.software.net_utils.*;
 /**
  * Hello world!
  *

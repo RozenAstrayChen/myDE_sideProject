@@ -1,4 +1,4 @@
-package idv.rozen.software.spider;
+package idv.rozen.software.net_utils;
 import org.jsoup.*;
 
 public class Coinmarket {
