@@ -1,15 +1,44 @@
-package idv.rozen.software.net_utils;
+package idv.rozen.net_utils;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
 
-public class Client extends WebSocketClient{
+public class MyClient{
+    Client client;
+    String url = "";
+    public MyClient(String url){
+        this.url = url;
+    } 
+    void initClient(){
+        try {
+            client =  new Client(new URI(this.url));
+        } catch (URISyntaxException e) {
+            //TODO: handle exception
+            System.out.println("URISyntaxException error: " + e);
+        }
+    }
+    void connect(){
+        client.connect();
+    }
+}
+
+class Client extends WebSocketClient{
     //Constructor
-    public Client(URI serverUri, Draft draft){
+    public Client(URI serverUri, Draft draft) {
         super(serverUri, draft);
     }
+    
+    public Client(URI serverURI) {
+    super(serverURI);
+    }
+
+    public Client(URI serverUri, Map<String, String> httpHeaders) {
+    super(serverUri, httpHeaders);
+    }
+    
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         send("Hello, it is me. Mario :)");
@@ -35,4 +64,6 @@ public class Client extends WebSocketClient{
         ex.printStackTrace();
         // if the error is fatal then onClose will be called additionally
     }
+
 }
+
