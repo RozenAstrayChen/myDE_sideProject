@@ -16,8 +16,8 @@ public class App
         System.out.println("Test WS client");
         ArrayList<String> wantToekn = new ArrayList<String>();
         wantToekn.add("btc");
-        Coinmarket coin_market = new Coinmarket(wantToekn);
-        coin_market.FindTokenId();
-        
+        wantToekn.add("eth");
+        Coinmarket coin_market = new Coinmarket();
+        coin_market.FindPrice(wantToekn);
     }
 }

@@ -33,13 +33,12 @@ public class Coinmarket {
      */
     String http_url = "https://coinmarketcap.com/zh-tw/";
     String getTokenId_url = "https://api.coinmarketcap.com/data-api/v3/map/all?listing_status=active,untracked&exchangeAux=is_active,status&cryptoAux=is_active,status&start=1&limit=10000";
-    ArrayList<String> wanToken = new ArrayList<String>();
     Dictionary iwN = new Hashtable();
     Dictionary nwI = new Hashtable();
-    Dictionary nwP
+    
     MyClient myWSClient;
-    public Coinmarket(ArrayList<String> wanToken){
-        this.wanToken = wanToken;
+    public Coinmarket(){
+        FindTokenId(); // using get request to get token id and name
         //myWSClient = new MyClient("ws://localhost:8887");
         //myWSClient.initClient();
         
@@ -71,6 +70,14 @@ public class Coinmarket {
             System.out.println("JSONException happend: "+ e);
         }
     }
+    public Dictionary FindPrice(ArrayList<String> wantToken){
+        Dictionary nwP = new Hashtable();
+        for (String i : wantToken){
+            int id = (int) this.nwI.get(i);
+            System.out.println(id);
+        }
+        return nwP;
+    }
     public JsonNode Convert2Json(StringBuilder str) throws JsonMappingException, JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonStr = mapper.readTree(str.toString());
@@ -82,14 +89,10 @@ public class Coinmarket {
             JsonNode element = elements.next();
             // token name
             this.iwN.put(element.get("id"), element.get("slug"));
-            this.nwI.put(element.get("slug"), element.get("id");
+            this.nwI.put(element.get("slug"), element.get("id"));
         }
     }
     public void listenWS(){
         myWSClient.connect();
-    }
-
-    public void ModifyToeknName(ArrayList<String> wanToken){
-        this.wanToken = wanToken;
     }
 }
