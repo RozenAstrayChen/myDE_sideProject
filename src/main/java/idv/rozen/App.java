@@ -1,5 +1,7 @@
 package idv.rozen;
 
+import java.util.ArrayList;
+
 import idv.rozen.net_utils.Coinmarket;
 
 
@@ -12,8 +14,10 @@ public class App
     public static void main( String[] args )
     {
         System.out.println("Test WS client");
-        Coinmarket coin_market = new Coinmarket("btc");
-        coin_market.listenWS();
+        ArrayList<String> wantToekn = new ArrayList<String>();
+        wantToekn.add("btc");
+        Coinmarket coin_market = new Coinmarket(wantToekn);
+        coin_market.FindTokenId();
         
     }
 }
