@@ -1,8 +1,4 @@
 package idv.rozen.net_utils;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
-import org.java_websocket.handshake.ServerHandshake;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -11,8 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 //import org.jsoup.*;
-import java.net.CookieManager;
-import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.Buffer;
@@ -33,8 +27,9 @@ public class Coinmarket {
      */
     String http_url = "https://coinmarketcap.com/zh-tw/";
     String getTokenId_url = "https://api.coinmarketcap.com/data-api/v3/map/all?listing_status=active,untracked&exchangeAux=is_active,status&cryptoAux=is_active,status&start=1&limit=10000";
-    Dictionary iwN = new Hashtable();
-    Dictionary nwI = new Hashtable();
+    
+    Dictionary<Integer, String> iwN = new Hashtable<Integer, String>();
+    Dictionary<String, Integer> nwI = new Hashtable<String, Integer>();
     
     MyClient myWSClient;
     public Coinmarket(){
@@ -61,7 +56,7 @@ public class Coinmarket {
             }
             in.close();
             JsonNode jsonStr = Convert2Json(content);
-            storage2Dict(jsonStr.get("data").get("exchangeMap"));
+            storage2Dict(jsonStr.get("data").get("cryptoCurrencyMap"));
             
         } catch (IOException e) {
             //TODO: handle exception
@@ -71,12 +66,12 @@ public class Coinmarket {
         }
     }
     public Dictionary FindPrice(ArrayList<String> wantToken){
-        Dictionary nwP = new Hashtable();
+        ArrayList<Integer> wantTokenID = new ArrayList<>();
         for (String i : wantToken){
-            int id = (int) this.nwI.get(i);
-            System.out.println(id);
+            wantTokenID.add(this.nwI.get(i));
         }
-        return nwP;
+        System.out.println(wantTokenID);
+        return nwI;
     }
     public JsonNode Convert2Json(StringBuilder str) throws JsonMappingException, JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
@@ -88,11 +83,8 @@ public class Coinmarket {
         while(elements.hasNext()){
             JsonNode element = elements.next();
             // token name
-            this.iwN.put(element.get("id"), element.get("slug"));
-            this.nwI.put(element.get("slug"), element.get("id"));
+            this.iwN.put(element.get("id").intValue(), element.get("symbol").textValue());
+            this.nwI.put(element.get("symbol").textValue(), element.get("id").intValue());
         }
-    }
-    public void listenWS(){
-        myWSClient.connect();
     }
 }
