@@ -22,14 +22,14 @@ public class App
         wantToekn.add("BTC");
         wantToekn.add("ETH");
         Coinmarket coin_market = new Coinmarket();
-        coin_market.FindPrice(wantToekn);
+        coin_market.findPrice(wantToekn);
         */
         Map<String, String> header = new HashMap<String, String>();
 
         MyClient myClient = new MyClient("wss://stream.coinmarketcap.com/price/latest");
         
         int[] wantToken = {1};
-        myClient.StartClient();
-        myClient.SendMessage(wantToken);
+        myClient.startClient();
+        myClient.sendMessage(wantToken);
     }
 }

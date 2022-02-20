@@ -33,12 +33,12 @@ public class Coinmarket {
     
     MyClient myWSClient;
     public Coinmarket(){
-        FindTokenId(); // using get request to get token id and name
+        findTokenId(); // using get request to get token id and name
         //myWSClient = new MyClient("ws://localhost:8887");
         //myWSClient.initClient();
         
     }
-    public void FindTokenId() {
+    public void findTokenId() {
         try {
             URL url = new URL(this.getTokenId_url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -55,7 +55,7 @@ public class Coinmarket {
                 content.append(inputLine);
             }
             in.close();
-            JsonNode jsonStr = Convert2Json(content);
+            JsonNode jsonStr = convert2Json(content);
             storage2Dict(jsonStr.get("data").get("cryptoCurrencyMap"));
             
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class Coinmarket {
             System.out.println("JSONException happend: "+ e);
         }
     }
-    public Dictionary FindPrice(ArrayList<String> wantToken){
+    public Dictionary findPrice(ArrayList<String> wantToken){
         ArrayList<Integer> wantTokenID = new ArrayList<>();
         for (String i : wantToken){
             wantTokenID.add(this.nwI.get(i));
@@ -73,7 +73,7 @@ public class Coinmarket {
         System.out.println(wantTokenID);
         return nwI;
     }
-    public JsonNode Convert2Json(StringBuilder str) throws JsonMappingException, JsonProcessingException{
+    public JsonNode convert2Json(StringBuilder str) throws JsonMappingException, JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonStr = mapper.readTree(str.toString());
         return jsonStr;

@@ -12,21 +12,21 @@ public class MyClient{
     public MyClient(String url){
         this.url = url;
     } 
-    public void StartClient() {
+    public void startClient() {
         try{
             MsgWebSocketClient client = new MsgWebSocketClient(url);
-            WebClientEnum.CLIENT.InitClient(client);
+            WebClientEnum.CLIENT.initClient(client);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    public void SendMessage(int[] wantTokenId){
-        String wantToeknStr = TestSendMessage(wantTokenId);
-        WebClientEnum.CLIENT.SendPackage(wantToeknStr); 
+    public void sendMessage(int[] wantTokenId){
+        String wantToeknStr = testSendMessage(wantTokenId);
+        WebClientEnum.CLIENT.sendPackage(wantToeknStr); 
     }
 
-    public String TestSendMessage(int[] wantTokenId){
+    public String testSendMessage(int[] wantTokenId){
         JSONObject obj1 = new JSONObject();
         JSONObject obj2 = new JSONObject();
     

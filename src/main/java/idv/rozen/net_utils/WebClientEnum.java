@@ -21,10 +21,13 @@ import idv.rozen.net_utils.MsgWebSocketClient;
 
 
 public enum WebClientEnum {
+    /**
+     * This class is use to enum websocket client
+     */
     CLIENT;
     private static MsgWebSocketClient socketClient = null;
 
-    public static void InitClient(MsgWebSocketClient client) throws Exception{
+    public static void initClient(MsgWebSocketClient client) throws Exception{
         // define SSL need parameters
         // pls look here https://stackoverflow.com/questions/44572162/java-websocket-cannot-resolve-setwebsocketfactory
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -62,7 +65,10 @@ public enum WebClientEnum {
         //socketClient.send("bytes");
         
     }
-    public void SendPackage(String str) {
+    public void sendPackage(String str) {
+        /**
+         * Send data to 
+         */
         System.out.println("Send data"+ str);
         socketClient.send(str);
     }
